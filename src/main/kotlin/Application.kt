@@ -47,9 +47,6 @@ fun Application.main() {
         val graphQLModel by inject<GraphQLModel>()
         val beerService by inject<BeerService>()
 
-        get("/") {
-            call.respondText("Hello world", ContentType.Application.Json)
-        }
 
         post("/beerql") {
 
