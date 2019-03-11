@@ -22,6 +22,10 @@ class GraphQLModel(private val beerRepository: BeerRepository) : KoinComponent {
                 }
         }
 
+        // bug in graphiql requires schema to contain mutation definition
+        mutation("placeholder") {
+            resolver { -> listOf(Beer()) }
+        }
 
         type<Beer>()
     }
