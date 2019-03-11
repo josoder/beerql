@@ -16,16 +16,16 @@ import kotlin.test.assertTrue
 class BeerQLITTest {
     @Test
     fun testInit() = withTestApplication(Application::main) {
-        with(handleRequest(HttpMethod.Get, "/beers")) {
+        with(handleRequest(HttpMethod.Get, "/api/beers")) {
             assertEquals(HttpStatusCode.OK, response.status())
             assertTrue(JsonHelper.convertJsonArrayToBeers(response.content!!).isEmpty())
         }
 
-        with(handleRequest(HttpMethod.Get, "/init")) {
+        with(handleRequest(HttpMethod.Get, "/api/init")) {
             assertEquals(HttpStatusCode.OK, response.status())
         }
 
-        with(handleRequest(HttpMethod.Get, "/beers")) {
+        with(handleRequest(HttpMethod.Get, "/api/beers")) {
             assertEquals(HttpStatusCode.OK, response.status())
             assertFalse(JsonHelper.convertJsonArrayToBeers(response.content!!).isEmpty())
         }
