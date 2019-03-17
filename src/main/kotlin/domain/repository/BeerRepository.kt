@@ -7,7 +7,8 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.koin.core.KoinComponent
 
 object Beers : IntIdTable() {
-    val sequelId = integer("sequel_id").uniqueIndex()
+    val sequelId = integer("sequel_id").autoIncrement().primaryKey()
+    val csv = integer("csv_id")
     val breweryId = integer("brewery_id")
     val categoryId = integer("category_id")
     val name = varchar("name", 100)
@@ -31,7 +32,7 @@ class BeerRepository : KoinComponent {
 
         transaction {
             ids = Beers.batchInsert(beerList) { beer ->
-                this[Beers.sequelId] = beer.id!!
+                this[Beers.csv] = beer.csv!!
                 this[Beers.breweryId] = beer.categoryId!!
                 this[Beers.categoryId] = beer.categoryId!!
                 this[Beers.name] = beer.name!!
@@ -42,12 +43,20 @@ class BeerRepository : KoinComponent {
         return ids
     }
 
-    fun iterate() {
+    fun createBeer(beer: Beer): Int? {
+        var id: Int? = null
+
         transaction {
-            Beers.selectAll().forEach {
-                println(it[Beers.name])
-            }
+            id = Beers.insertAndGetId {
+                it[Beers.breweryId] = beer.categoryId!!
+                it[Beers.categoryId] = beer.categoryId!!
+                it[Beers.name] = beer.name!!
+                it[Beers.description] = beer.description!!
+                it[Beers.alcoholPercentage] = beer.alcoholPercentage!!
+            }.value
         }
+
+        return id
     }
 
     fun getAll(limit: Int? = null): List<Beer> {

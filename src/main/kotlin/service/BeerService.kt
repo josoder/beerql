@@ -16,4 +16,8 @@ class BeerService(val beerRepository: BeerRepository) : KoinComponent {
     fun getAllBeers(): List<Beer> {
         return beerRepository.getAll()
     }
+
+    fun createBeer(beer: Beer): Int? {
+       return beerRepository.createBeer(beer)
+    }
 }

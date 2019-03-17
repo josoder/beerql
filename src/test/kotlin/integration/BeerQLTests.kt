@@ -21,7 +21,7 @@ class BeerQLITTest {
             assertTrue(JsonHelper.convertJsonArrayToBeers(response.content!!).isEmpty())
         }
 
-        with(handleRequest(HttpMethod.Get, "/api/init")) {
+        with(handleRequest(HttpMethod.Get, "/api/beers/init")) {
             assertEquals(HttpStatusCode.OK, response.status())
         }
 
