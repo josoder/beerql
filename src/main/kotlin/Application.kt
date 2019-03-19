@@ -49,5 +49,5 @@ fun Application.main() {
 }
 
 fun main() {
-    embeddedServer(Netty,8080, module = Application::main).start()
+    embeddedServer(Netty,8080, module = Application::main).start(wait = false)
 }

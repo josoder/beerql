@@ -17,12 +17,20 @@ fun Routing.graphQLRoute() {
     post("/beerql") {
         val req = call.receive<GraphQlRequest>()
         println(req)
-        val variables = jacksonObjectMapper().writeValueAsString(req.variables)
-        call.respondText(
-            graphQLModel.schema.execute(req.query, variables), ContentType.Application.Json)
+        val res: String
+        if (req.variables == null) {
+
+            res = graphQLModel.schema.execute(req.query)
+        }
+        else {
+            val variables = jacksonObjectMapper().writeValueAsString(req.variables)
+            res = graphQLModel.schema.execute(req.query, variables)
+        }
+
+        call.respondText (res, ContentType.Application.Json)
     }
 }
 
 
-data class GraphQlRequest(val query: String, val variables: Map<String, Any> = emptyMap())
+data class GraphQlRequest(val query: String, val variables: Map<String, Any>? = emptyMap())
 
