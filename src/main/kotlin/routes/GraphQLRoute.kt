@@ -37,7 +37,7 @@ data class GraphQlRequest(val query: String = "", val variables: Map<String, Any
 fun Route.graphQLRoute() {
     val graphQLModel by inject<GraphQLModel>()
 
-    post {
+    post("/beerql") {
         // parse json as a GraphQlRequest
         val req = call.receive<GraphQlRequest>()
 

@@ -1,5 +1,6 @@
 package integration
 
+import beerql.beerql
 import helpers.JsonHelper
 import io.ktor.application.Application
 import io.ktor.http.HttpMethod
@@ -14,7 +15,7 @@ import kotlin.test.assertTrue
 
 class BeerQLITTest {
     @Test
-    fun testInit() = withTestApplication(Application::main) {
+    fun testInit() = withTestApplication(Application::beerql) {
         with(handleRequest(HttpMethod.Get, "/api/beers")) {
             assertEquals(HttpStatusCode.OK, response.status())
             assertTrue(JsonHelper.convertJsonArrayToBeers(response.content!!).isEmpty())
