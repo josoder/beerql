@@ -1,8 +1,8 @@
 package service
 
-import domain.repository.BeerRepository
 import domain.Parser
 import domain.model.Beer
+import domain.repository.BeerRepository
 import org.koin.core.KoinComponent
 
 class BeerService(val beerRepository: BeerRepository) : KoinComponent {
@@ -18,6 +18,6 @@ class BeerService(val beerRepository: BeerRepository) : KoinComponent {
     }
 
     fun createBeer(beer: Beer): Int? {
-       return beerRepository.createBeer(beer)
+        return beerRepository.createBeer(beer)
     }
 }

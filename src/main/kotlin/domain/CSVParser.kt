@@ -6,7 +6,6 @@ import domain.repository.BeerRepository
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
-import kotlin.collections.ArrayList
 
 class Parser {
     companion object {

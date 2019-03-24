@@ -44,18 +44,16 @@ dependencies {
     // include JUnit 5 test engine
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_version"
 
-    // spek
-    testImplementation "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
-    testRuntimeOnly "org.spekframework.spek2:spek-runner-junit5:$spek_version"
-    testRuntimeOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     // koin
     testImplementation "org.koin:koin-test:$koin_version"
 }
 
 test {
-    useJUnitPlatform {
-        includeEngines 'spek2'
+    testLogging {
+        events = ["passed", "failed", "skipped"]
+        showStandardStreams = true
+        exceptionFormat = 'full'
     }
 }
 

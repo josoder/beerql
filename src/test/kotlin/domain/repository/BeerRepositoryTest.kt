@@ -1,6 +1,7 @@
 package domain.repository
 
 import domain.Parser
+import domain.model.Beer
 import org.jetbrains.exposed.sql.exists
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.Assert.assertFalse
@@ -21,10 +22,11 @@ class BeerRepositoryTest {
     @Before
     fun setUp() {
         beerRepository = BeerRepository()
+        beerRepository.createTable()
     }
 
     @Test
-    fun createTableAndInitDataTest() {
+    fun `should create table and add data`() {
         addTestData()
 
         transaction {
@@ -35,9 +37,25 @@ class BeerRepositoryTest {
     }
 
     @Test
-    fun getWithLimitTest() {
+    fun `should get a limited amount of beers`() {
         addTestData()
 
         assertTrue(beerRepository.getAll(limit = 100).count() == 100)
+    }
+
+    @Test
+    fun `should create beer and return id`() {
+        val newId = beerRepository.createBeer(Beer(name = "test", breweryId = null, categoryId = null))
+
+        assertTrue(newId is Int && newId != 0)
+    }
+
+    @Test
+    fun `should find beer by id`() {
+        val newId = beerRepository.createBeer(Beer(name = "test"))
+
+        val savedEntity = beerRepository.findById(newId!!)
+
+        assertTrue(savedEntity!!.id == newId)
     }
 }

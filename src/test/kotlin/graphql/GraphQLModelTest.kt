@@ -1,7 +1,7 @@
 package graphql
 
-import domain.repository.BeerRepository
 import domain.Parser
+import domain.repository.BeerRepository
 import helpers.JsonHelper
 import org.junit.Assert.assertTrue
 import org.junit.BeforeClass
@@ -24,7 +24,7 @@ class GraphQLModelTest {
     }
 
     @Test
-    fun testGetAllBeers() {
+    fun `should get all beers`() {
         val graphQLModel = GraphQLModel(beerRepository)
 
         val jsonString = graphQLModel.schema.execute("{beers(){id, name}}")
@@ -36,7 +36,7 @@ class GraphQLModelTest {
     }
 
     @Test
-    fun getAllWithLimit() {
+    fun `should set the limit to the size variable`() {
         val graphQLModel = GraphQLModel(beerRepository)
 
         val json = graphQLModel.schema.execute("{beers(size: 100){id, name}}")
@@ -45,7 +45,6 @@ class GraphQLModelTest {
 
         assertTrue(objects.size == 100)
     }
-
 
 
 }

@@ -17,7 +17,7 @@ import routes.beersRoute
 import routes.graphQLRoute
 import service.BeerService
 
-
+// Register coin DP module
 val beerqlModule = module {
     factory { BeerRepository() }
     factory { BeerService(get()) }
@@ -25,6 +25,10 @@ val beerqlModule = module {
 }
 
 fun Application.main() {
+    /**
+     * install ktor features
+     * All the standard available features described here: https://ktor.io/servers/features.html
+     */
     install(CallLogging)
     install(DefaultHeaders)
     installKoin {
@@ -45,9 +49,9 @@ fun Application.main() {
         graphQLRoute()
         beersRoute()
     }
-
 }
 
 fun main() {
-    embeddedServer(Netty,8080, module = Application::main).start(wait = false)
+    // start embedded server using netty as backend and wait for connections
+    embeddedServer(Netty, 8080, module = Application::main).start(wait = true)
 }

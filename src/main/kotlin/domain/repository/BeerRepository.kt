@@ -8,12 +8,12 @@ import org.koin.core.KoinComponent
 
 object Beers : IntIdTable() {
     val sequelId = integer("sequel_id").autoIncrement().primaryKey()
-    val csv = integer("csv_id")
-    val breweryId = integer("brewery_id")
-    val categoryId = integer("category_id")
+    val csv = integer("csv_id").nullable()
+    val breweryId = integer("brewery_id").nullable()
+    val categoryId = integer("category_id").nullable()
     val name = varchar("name", 100)
-    val description = text("description")
-    val alcoholPercentage = float("alc_per")
+    val description = text("description").nullable()
+    val alcoholPercentage = float("alc_per").nullable()
 }
 
 class BeerRepository : KoinComponent {
@@ -33,11 +33,11 @@ class BeerRepository : KoinComponent {
         transaction {
             ids = Beers.batchInsert(beerList) { beer ->
                 this[Beers.csv] = beer.csv!!
-                this[Beers.breweryId] = beer.categoryId!!
-                this[Beers.categoryId] = beer.categoryId!!
+                this[Beers.breweryId] = beer.breweryId
+                this[Beers.categoryId] = beer.categoryId
                 this[Beers.name] = beer.name!!
-                this[Beers.description] = beer.description!!
-                this[Beers.alcoholPercentage] = beer.alcoholPercentage!!
+                this[Beers.description] = beer.description
+                this[Beers.alcoholPercentage] = beer.alcoholPercentage
             }
         }
         return ids
@@ -48,11 +48,11 @@ class BeerRepository : KoinComponent {
 
         transaction {
             id = Beers.insertAndGetId {
-                it[Beers.breweryId] = beer.categoryId!!
-                it[Beers.categoryId] = beer.categoryId!!
+                it[Beers.breweryId] = beer.categoryId
+                it[Beers.categoryId] = beer.categoryId
                 it[Beers.name] = beer.name!!
-                it[Beers.description] = beer.description!!
-                it[Beers.alcoholPercentage] = beer.alcoholPercentage!!
+                it[Beers.description] = beer.description
+                it[Beers.alcoholPercentage] = beer.alcoholPercentage
             }.value
         }
 
@@ -76,6 +76,20 @@ class BeerRepository : KoinComponent {
         }
 
         return allBeers
+    }
+
+    fun findById(beerId: Int): Beer? {
+        var beer: Beer? = null
+
+        transaction {
+            val res = Beers.select {
+                Beers.sequelId.eq(beerId)
+            }.firstOrNull()
+
+            if (res != null) beer = convertToBeer(res)
+        }
+
+        return beer
     }
 
     private fun getWithLimit(size: Int): List<Beer> {

@@ -8,17 +8,17 @@ import org.koin.core.KoinComponent
 import org.koin.core.context.startKoin
 import org.koin.core.inject
 
-class BeerServiceTest: KoinComponent{
-        @Before
-        fun init() {
-            startKoin {
-                modules(beerqlModule)
-            }
+class BeerServiceTest : KoinComponent {
+    @Before
+    fun init() {
+        startKoin {
+            modules(beerqlModule)
         }
+    }
 
     @Test
-    fun initBeers() {
-        val service by inject<BeerService> ()
+    fun `initBeers`() {
+        val service by inject<BeerService>()
 
         assertTrue(service.getAllBeers().isEmpty())
 

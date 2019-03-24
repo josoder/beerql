@@ -10,7 +10,6 @@ import io.ktor.response.respondText
 import io.ktor.routing.Routing
 import io.ktor.routing.get
 import io.ktor.routing.post
-import org.koin.ktor.ext.get
 import org.koin.ktor.ext.inject
 import service.BeerService
 
@@ -33,7 +32,7 @@ fun Routing.beersRoute() {
         val id = beerService.createBeer(beer)
 
         if (id != null) {
-            call.respond(HttpStatusCode.Created ,id)
+            call.respond(HttpStatusCode.Created, id)
         } else {
             call.respond(HttpStatusCode.InternalServerError)
         }
