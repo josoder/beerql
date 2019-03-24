@@ -1,6 +1,5 @@
 package service
 
-import beerqlModule
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test

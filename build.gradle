@@ -18,7 +18,7 @@ repositories {
 }
 
 application {
-    mainClassName = "ApplicationKt"
+    mainClassName = "io.ktor.server.netty.EngineMain"
 }
 
 dependencies {
@@ -33,6 +33,7 @@ dependencies {
     implementation "org.koin:koin-core:$koin_version"
     implementation "org.koin:koin-core-ext:$koin_version"
     implementation "org.koin:koin-ktor:$koin_version"
+    implementation "io.ktor:ktor-locations:$ktor_version"
 
     // Test
     testImplementation "io.ktor:ktor-server-test-host:$ktor_version"

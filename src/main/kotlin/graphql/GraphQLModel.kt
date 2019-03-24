@@ -5,7 +5,6 @@ import com.github.pgutkowski.kgraphql.KGraphQL
 import domain.model.Beer
 import domain.repository.BeerRepository
 import org.koin.core.KoinComponent
-import org.koin.core.get
 
 class GraphQLModel(private val beerRepository: BeerRepository) : KoinComponent {
 
@@ -16,6 +15,9 @@ class GraphQLModel(private val beerRepository: BeerRepository) : KoinComponent {
             objectMapper = jacksonObjectMapper()
         }
 
+        /**
+         * beers (size: Int) { }
+         */
         query("beers") {
             resolver { size: Int -> beerRepository.getAll(size) }
                 .withArgs {
@@ -23,6 +25,9 @@ class GraphQLModel(private val beerRepository: BeerRepository) : KoinComponent {
                 }
         }
 
+        /**
+         * beer (id: Int) {}
+         */
         query("beer") {
             resolver { id: Int -> beerRepository.findById(id) }
                 .withArgs {

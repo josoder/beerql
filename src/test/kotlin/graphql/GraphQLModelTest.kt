@@ -56,10 +56,10 @@ class GraphQLModelTest {
 
         val res = JsonHelper.convertGQLJsonToBeer(json)
 
-        assertAll ("beer(id: 1)",
+        assertAll("beer(id: 1)",
             Executable { assertTrue(res != null) },
             Executable { assertTrue(res!!.id == 1) }
-            )
+        )
     }
 
 
