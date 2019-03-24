@@ -55,5 +55,25 @@ class JsonHelper {
 
             return objectList
         }
+
+        fun convertGQLJsonToBeer(json: String): Beer? {
+            val objectMapper = ObjectMapper()
+                .registerModule(KotlinModule())
+                .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+
+            var beer: Beer? = null
+
+            try {
+                val jsonData = objectMapper.readTree(json)["data"]["beer"]
+
+                beer = objectMapper.readValue<Beer>(jsonData.toString())
+
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+            return beer
+        }
     }
 }

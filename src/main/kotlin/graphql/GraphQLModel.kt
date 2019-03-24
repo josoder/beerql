@@ -5,6 +5,7 @@ import com.github.pgutkowski.kgraphql.KGraphQL
 import domain.model.Beer
 import domain.repository.BeerRepository
 import org.koin.core.KoinComponent
+import org.koin.core.get
 
 class GraphQLModel(private val beerRepository: BeerRepository) : KoinComponent {
 
@@ -19,6 +20,13 @@ class GraphQLModel(private val beerRepository: BeerRepository) : KoinComponent {
             resolver { size: Int -> beerRepository.getAll(size) }
                 .withArgs {
                     arg<Int> { name = "size"; defaultValue = 20 }
+                }
+        }
+
+        query("beer") {
+            resolver { id: Int -> beerRepository.findById(id) }
+                .withArgs {
+                    arg<Int> { name = "id" }
                 }
         }
 

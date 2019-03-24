@@ -6,6 +6,8 @@ import helpers.JsonHelper
 import org.junit.Assert.assertTrue
 import org.junit.BeforeClass
 import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertAll
+import org.junit.jupiter.api.function.Executable
 import kotlin.test.assertFalse
 
 class GraphQLModelTest {
@@ -44,6 +46,20 @@ class GraphQLModelTest {
         val objects = JsonHelper.convertGQLJsonToBeers(json)
 
         assertTrue(objects.size == 100)
+    }
+
+    @Test
+    fun `should get beer with id`() {
+        val graphQLModel = GraphQLModel(beerRepository)
+
+        val json = graphQLModel.schema.execute("{beer(id: 1){id, name}}")
+
+        val res = JsonHelper.convertGQLJsonToBeer(json)
+
+        assertAll ("beer(id: 1)",
+            Executable { assertTrue(res != null) },
+            Executable { assertTrue(res!!.id == 1) }
+            )
     }
 
 
