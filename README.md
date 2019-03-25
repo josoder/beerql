@@ -34,12 +34,22 @@ More information about the Ktor lifecycle can be found [here](https://ktor.io/se
 
 
 # Setup
-<li> ./gradlew run
-<li> localhost:8080/api/beerql exposes the graphql root
+<li> <code> ./gradlew run </code>
+
+### or run with docker:
+<li> <code>./gradlew build</code>
+<li> <code>docker build -t beerql .</code>
+<li> <code>docker run -p 8080:8080 --rm beerql</code>
+
+
+<br>
+
+http://localhost:8080/api/beerql exposes the graphql root
 
 Use graphiql standalone or the chrome extension in the link below to explore the content 
 
 https://chrome.google.com/webstore/detail/chromeiql/fkkiamalmpiidkljmicmjfbieiclmeij
 
 Currently there is only 2 queries defined beers(size:Int) and beer(id:Int)
+
 

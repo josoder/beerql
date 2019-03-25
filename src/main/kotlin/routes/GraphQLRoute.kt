@@ -5,7 +5,6 @@ import graphql.GraphQLModel
 import io.ktor.application.call
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.locations.Location
 import io.ktor.request.receive
 import io.ktor.response.respondText
 import io.ktor.routing.Route
@@ -13,7 +12,6 @@ import io.ktor.routing.post
 import org.koin.ktor.ext.inject
 
 
-@Location("/beerql")
 data class GraphQlRequest(val query: String = "", val variables: Map<String, Any>? = emptyMap())
 
 /**
